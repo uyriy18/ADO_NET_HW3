@@ -34,7 +34,11 @@
             this.txbx_Result = new System.Windows.Forms.TextBox();
             this.lbl_Info = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.lbl_Books = new System.Windows.Forms.Label();
+            this.lbl_Authors = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // txbx_FirstStream
@@ -57,7 +61,7 @@
             // 
             this.btn_Start.BackColor = System.Drawing.Color.Crimson;
             this.btn_Start.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btn_Start.Location = new System.Drawing.Point(367, 42);
+            this.btn_Start.Location = new System.Drawing.Point(345, 42);
             this.btn_Start.Name = "btn_Start";
             this.btn_Start.Size = new System.Drawing.Size(75, 63);
             this.btn_Start.TabIndex = 2;
@@ -91,11 +95,40 @@
             this.dataGridView1.Size = new System.Drawing.Size(615, 220);
             this.dataGridView1.TabIndex = 5;
             // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(12, 373);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(615, 115);
+            this.dataGridView2.TabIndex = 6;
+            // 
+            // lbl_Books
+            // 
+            this.lbl_Books.AutoSize = true;
+            this.lbl_Books.Location = new System.Drawing.Point(9, 114);
+            this.lbl_Books.Name = "lbl_Books";
+            this.lbl_Books.Size = new System.Drawing.Size(108, 13);
+            this.lbl_Books.TabIndex = 7;
+            this.lbl_Books.Text = "Book\'s  dataGridView";
+            // 
+            // lbl_Authors
+            // 
+            this.lbl_Authors.AutoSize = true;
+            this.lbl_Authors.Location = new System.Drawing.Point(15, 356);
+            this.lbl_Authors.Name = "lbl_Authors";
+            this.lbl_Authors.Size = new System.Drawing.Size(114, 13);
+            this.lbl_Authors.TabIndex = 8;
+            this.lbl_Authors.Text = "Author\'s  dataGridView";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(641, 353);
+            this.ClientSize = new System.Drawing.Size(641, 489);
+            this.Controls.Add(this.lbl_Authors);
+            this.Controls.Add(this.lbl_Books);
+            this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.lbl_Info);
             this.Controls.Add(this.txbx_Result);
@@ -105,6 +138,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -118,6 +152,9 @@
         private System.Windows.Forms.TextBox txbx_Result;
         private System.Windows.Forms.Label lbl_Info;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Label lbl_Books;
+        private System.Windows.Forms.Label lbl_Authors;
     }
 }
 

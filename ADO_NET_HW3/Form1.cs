@@ -24,8 +24,8 @@ namespace ADO_NET_HW3
         public Form1()
         {
             InitializeComponent();
-            txbx_FirstStream.Text = "SELECT * FROM Books";
-            txbx_SecondStream.Text = "SELECT * FROM Authors";
+            txbx_FirstStream.Text = "WAITFOR DELAY '00:00:02'; SELECT* FROM Books; ";
+            txbx_SecondStream.Text = "WAITFOR DELAY '00:00:03'; SELECT* FROM Authors; ";
         }
 
         private void btn_Start_Click(object sender, EventArgs e)
@@ -37,6 +37,7 @@ namespace ADO_NET_HW3
             }
             using(connection = new SqlConnection(cs))
             {
+                
                 try
                 {
                     SqlCommand command = connection.CreateCommand();
@@ -48,7 +49,7 @@ namespace ADO_NET_HW3
                     IAsyncResult ia = command.BeginExecuteReader();
                     WaitHandle handle = ia.AsyncWaitHandle;
 
-                    if (handle.WaitOne(5000))
+                    if (handle.WaitOne(10000))
                     {
                         GetData(command, ia);
                     }
@@ -56,6 +57,19 @@ namespace ADO_NET_HW3
                     {
                         MessageBox.Show("Timeout exedeed");
                     }
+                    command.CommandText = txbx_SecondStream.Text;
+                    IAsyncResult ia2 = command.BeginExecuteReader();
+                    WaitHandle handle2 = ia.AsyncWaitHandle;
+
+                    if (handle2.WaitOne(10000))
+                    {
+                        GetData2(command, ia2);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Timeout exedeed");
+                    }
+                    txbx_Result.Text = $"{fsCount} symbols in the all Book's titeles\n{ssCount} symbols in the all Author's firstnames and lastnames";
                 }
                 catch(Exception ex)
                 {
@@ -90,20 +104,80 @@ namespace ADO_NET_HW3
                         for (int i = 0; i < reader.FieldCount; i++)
                         {
                             row[i] = reader[i];
+                            if(row[i] == row["Title"])
+                            {
+                                letters += row[i];
+                            }
                             
                         }
-                        letters += row["Title"];
                         table.Rows.Add(row);
                         dataGridView1.DataSource = table;
-                        letters = letters.Trim();
-                        fsCount = letters.Length;
-                        txbx_Result.Text = $"{fsCount} symbols in the all Book's titeles ";
+                      
                     }
                 }
                 while (reader.NextResult());
 
+                letters = letters.Replace(" ","");
+                fsCount = letters.Length;
+                
             }
             catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (!reader.IsClosed)
+                {
+                    reader.Close();
+                }
+            }
+        }
+
+        void GetData2(SqlCommand cmd, IAsyncResult ia)
+        {
+            SqlDataReader reader = null;
+            try
+            {
+                string letters = "";
+                reader = cmd.EndExecuteReader(ia);
+                table = new DataTable();
+                bool isHeader = true;
+                do
+                {
+                    while (reader.Read())
+                    {
+                        if (isHeader)
+                        {
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                table.Columns.Add(reader.GetName(i));
+                            }
+                            isHeader = false;
+                        }
+                        DataRow row = table.NewRow();
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            row[i] = reader[i];
+                            if(row[i] == row["Firstname"] || row[i] == row["Lastname"])
+                            {
+                                letters += row[i];
+                            }
+
+                        }
+                      
+                        table.Rows.Add(row);
+                        dataGridView2.DataSource = table;
+                       
+                        
+                    }
+                }
+                while (reader.NextResult());
+
+                letters = letters.Replace(" ", "");
+                ssCount = letters.Length;
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
